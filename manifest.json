@@ -1,0 +1,78 @@
+{
+  "schema": "music_self_critique_blind_listening_v1",
+  "study": "instrumental-listening",
+  "comparison": "blinded-pairwise",
+  "pair_count": 10,
+  "pairs": [
+    {
+      "pair_id": "pair_001",
+      "tracks": {
+        "A": "audio/pair_001_a.mp3",
+        "B": "audio/pair_001_b.mp3"
+      }
+    },
+    {
+      "pair_id": "pair_002",
+      "tracks": {
+        "A": "audio/pair_002_a.mp3",
+        "B": "audio/pair_002_b.mp3"
+      }
+    },
+    {
+      "pair_id": "pair_003",
+      "tracks": {
+        "A": "audio/pair_003_a.mp3",
+        "B": "audio/pair_003_b.mp3"
+      }
+    },
+    {
+      "pair_id": "pair_004",
+      "tracks": {
+        "A": "audio/pair_004_a.mp3",
+        "B": "audio/pair_004_b.mp3"
+      }
+    },
+    {
+      "pair_id": "pair_005",
+      "tracks": {
+        "A": "audio/pair_005_a.mp3",
+        "B": "audio/pair_005_b.mp3"
+      }
+    },
+    {
+      "pair_id": "pair_006",
+      "tracks": {
+        "A": "audio/pair_006_a.mp3",
+        "B": "audio/pair_006_b.mp3"
+      }
+    },
+    {
+      "pair_id": "pair_007",
+      "tracks": {
+        "A": "audio/pair_007_a.mp3",
+        "B": "audio/pair_007_b.mp3"
+      }
+    },
+    {
+      "pair_id": "pair_008",
+      "tracks": {
+        "A": "audio/pair_008_a.mp3",
+        "B": "audio/pair_008_b.mp3"
+      }
+    },
+    {
+      "pair_id": "pair_009",
+      "tracks": {
+        "A": "audio/pair_009_a.mp3",
+        "B": "audio/pair_009_b.mp3"
+      }
+    },
+    {
+      "pair_id": "pair_010",
+      "tracks": {
+        "A": "audio/pair_010_a.mp3",
+        "B": "audio/pair_010_b.mp3"
+      }
+    }
+  ]
+}

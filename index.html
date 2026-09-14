@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>器乐作品听感评价</title>
+  <style>
+    :root{color-scheme:light;--ink:#16211c;--muted:#637068;--paper:#f6f4ec;--card:#fffdf7;--line:#d8d4c8;--accent:#27684a;--accent2:#dcecdf;--danger:#a13e32}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}
+    main{width:min(900px,calc(100% - 32px));margin:34px auto 72px}.eyebrow{letter-spacing:.13em;text-transform:uppercase;color:var(--accent);font-size:.78rem;font-weight:750}
+    h1{font-size:clamp(2rem,6vw,3.7rem);line-height:1.08;margin:.2em 0}.lead{font-size:1.08rem;color:var(--muted);max-width:680px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:clamp(20px,4vw,38px);box-shadow:0 12px 35px #342b1510;margin-top:24px}
+    .hidden{display:none!important}.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}.track{border:1px solid var(--line);border-radius:14px;padding:18px;background:white}
+    audio{width:100%;margin:8px 0 4px}.scale{border:0;padding:0;margin:18px 0}.scale legend{font-weight:700}.options{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+    .options label{border:1px solid var(--line);border-radius:999px;padding:7px 13px;cursor:pointer}.options label:has(input:checked){background:var(--accent2);border-color:var(--accent)}
+    input[type=radio]{margin-right:5px}.field{margin:16px 0}.field label{display:block;font-weight:700;margin-bottom:6px}select,textarea,input[type=text]{width:100%;font:inherit;border:1px solid var(--line);border-radius:10px;padding:10px;background:white}
+    textarea{min-height:82px;resize:vertical}.button{appearance:none;border:0;border-radius:999px;padding:12px 20px;background:var(--accent);color:white;font:700 1rem system-ui;cursor:pointer}.button.secondary{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+    .button:disabled{opacity:.5;cursor:not-allowed}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}.progress{height:8px;background:#dedbd1;border-radius:99px;overflow:hidden}.progress>div{height:100%;background:var(--accent);transition:width .25s}
+    .status{color:var(--muted);font-size:.9rem}.error{color:var(--danger);font-weight:650}.privacy{padding:12px 16px;background:#eef4ee;border-radius:10px;color:#405047}.pair-title{display:flex;justify-content:space-between;align-items:center;gap:16px}
+    @media(max-width:700px){.row{grid-template-columns:1fr}main{width:min(100% - 20px,900px);margin-top:18px}.card{border-radius:14px;padding:20px}}
+  </style>
+</head>
+<body><main>
+  <div class="eyebrow">Instrumental listening study</div>
+  <h1>器乐作品听感评价</h1>
+  <p class="lead">你将听到10组器乐作品。每组包含A、B两个版本，请独立评价它们的结构连贯性、音乐趣味性，并选择总体偏好。预计需要25–35分钟。</p>
+
+  <section id="intro" class="card">
+    <h2>开始前</h2>
+    <p class="privacy">页面不使用账号、Cookie或网络分析服务。回答只保存在你的浏览器中，完成后由你下载匿名结果文件并发送给研究者。</p>
+    <ul><li>建议佩戴耳机，在安静环境中进行。</li><li>同一组A、B请使用相同音量。</li><li>作品较长，可以拖动进度，但应充分听取开头、中段和结尾。</li><li>参与完全自愿，可以随时关闭页面退出。</li></ul>
+    <div class="field"><label for="training">音乐训练经历</label><select id="training"><option value="">请选择</option><option value="none">无</option><option value="under_3_years">少于3年</option><option value="3_plus_years">3年以上</option></select></div>
+    <div class="field"><label for="device">主要播放设备</label><select id="device"><option value="">请选择</option><option value="headphones">耳机</option><option value="speakers">音箱</option><option value="phone">手机外放</option><option value="other">其他</option></select></div>
+    <label><input id="consent" type="checkbox"> 我自愿参加，并同意匿名评分用于课程论文研究。</label>
+    <p id="intro-error" class="error"></p><div class="actions"><button id="start" class="button">开始评价</button></div>
+  </section>
+
+  <section id="study" class="card hidden">
+    <div class="progress"><div id="progress-bar"></div></div>
+    <div class="pair-title"><h2 id="pair-heading">第1组</h2><span id="participant" class="status"></span></div>
+    <p class="status">播放时间会写入匿名结果，用于检查评价是否基于充分聆听。</p>
+    <div class="row">
+      <article class="track"><h3>版本 A</h3><audio id="audio-A" controls preload="metadata"></audio><div id="listen-A" class="status">已播放 0 秒</div><div id="ratings-A"></div></article>
+      <article class="track"><h3>版本 B</h3><audio id="audio-B" controls preload="metadata"></audio><div id="listen-B" class="status">已播放 0 秒</div><div id="ratings-B"></div></article>
+    </div>
+    <fieldset class="scale"><legend>总体更喜欢哪一个版本？</legend><div class="options">
+      <label><input type="radio" name="preference" value="A">A</label><label><input type="radio" name="preference" value="B">B</label><label><input type="radio" name="preference" value="tie">无明显偏好</label>
+    </div></fieldset>
+    <div class="field"><label for="comment">简短理由（可选）</label><textarea id="comment" placeholder="例如：旋律更自然、段落衔接更清楚……"></textarea></div>
+    <p id="study-error" class="error"></p><div class="actions"><button id="next" class="button">保存并进入下一组</button></div>
+  </section>
+
+  <section id="done" class="card hidden"><h2>评价完成</h2><p>请下载匿名结果文件，并通过研究者提供的联系方式发送。文件中不包含姓名或联系方式。</p><div class="actions"><button id="download" class="button">下载结果 JSON</button><button id="copy" class="button secondary">复制结果码</button></div><p id="done-status" class="status"></p></section>
+</main>
+<script>
+const STORE='music-study-v1'; let manifest,state,timers={A:0,B:0},lastTick={A:null,B:null};
+const $=id=>document.getElementById(id); const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const b=new Uint32Array(1);crypto.getRandomValues(b);const j=b[0]%(i+1);[a[i],a[j]]=[a[j],a[i]]}return a};
+function code(){const b=new Uint32Array(2);crypto.getRandomValues(b);return 'P-'+[...b].map(x=>x.toString(36).slice(-4).padStart(4,'0')).join('').toUpperCase()}
+function scale(slot,key,label){return `<fieldset class="scale"><legend>${label}</legend><div class="options">${[1,2,3,4,5].map(v=>`<label><input type="radio" name="${slot}-${key}" value="${v}">${v}</label>`).join('')}</div></fieldset>`}
+function save(){localStorage.setItem(STORE,JSON.stringify(state))}
+function tick(slot){const a=$('audio-'+slot);if(!a.paused&&!a.ended){const now=performance.now();if(lastTick[slot]!==null)timers[slot]+=(now-lastTick[slot])/1000;lastTick[slot]=now;$('listen-'+slot).textContent=`已播放 ${Math.floor(timers[slot])} 秒`;state.current_listen={...timers};save()}else lastTick[slot]=null}
+function stopAudio(){['A','B'].forEach(s=>{const a=$('audio-'+s);a.pause();lastTick[s]=null})}
+function render(){const pair=manifest.pairs.find(p=>p.pair_id===state.order[state.index]);timers=state.current_listen||{A:0,B:0};$('progress-bar').style.width=`${100*state.index/manifest.pair_count}%`;$('pair-heading').textContent=`第 ${state.index+1} 组 / ${manifest.pair_count}`;$('participant').textContent=state.participant_id;
+ ['A','B'].forEach(s=>{$('audio-'+s).src=pair.tracks[s];$('listen-'+s).textContent=`已播放 ${Math.floor(timers[s]||0)} 秒`;$('ratings-'+s).innerHTML=scale(s,'coherence','结构连贯性')+scale(s,'interest','音乐趣味性')});$('comment').value='';document.querySelectorAll('input[name=preference]').forEach(x=>x.checked=false);$('study-error').textContent='';save()}
+function value(name){const x=document.querySelector(`input[name="${name}"]:checked`);return x?x.value:null}
+function result(){return {schema:'music_self_critique_response_v1',study:manifest.study,participant_id:state.participant_id,music_training:state.music_training,device:state.device,started_at:state.started_at,completed_at:new Date().toISOString(),presentation_order:state.order,responses:state.responses}}
+function blob(){return new Blob([JSON.stringify(result(),null,2)],{type:'application/json'})}
+function download(){const u=URL.createObjectURL(blob()),a=document.createElement('a');a.href=u;a.download=`${state.participant_id}-ratings.json`;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}
+async function boot(){manifest=await fetch('manifest.json',{cache:'no-store'}).then(r=>r.json());const old=localStorage.getItem(STORE);if(old){state=JSON.parse(old);if(state.responses?.length<manifest.pair_count){$('intro').classList.add('hidden');$('study').classList.remove('hidden');render()}else{$('intro').classList.add('hidden');$('done').classList.remove('hidden')}}}
+$('start').onclick=()=>{if(!$('training').value||!$('device').value||!$('consent').checked){$('intro-error').textContent='请完成设备、训练经历和自愿参与确认。';return}state={participant_id:code(),music_training:$('training').value,device:$('device').value,started_at:new Date().toISOString(),order:shuffle(manifest.pairs.map(p=>p.pair_id)),index:0,responses:[],current_listen:{A:0,B:0}};$('intro').classList.add('hidden');$('study').classList.remove('hidden');render()};
+$('next').onclick=()=>{['A','B'].forEach(tick);const ratings={A:{coherence:value('A-coherence'),interest:value('A-interest')},B:{coherence:value('B-coherence'),interest:value('B-interest')}};const preference=value('preference');if(!ratings.A.coherence||!ratings.A.interest||!ratings.B.coherence||!ratings.B.interest||!preference){$('study-error').textContent='请完成四项评分和总体偏好。';return}const durations={A:$('audio-A').duration||null,B:$('audio-B').duration||null};const insufficient=['A','B'].filter(s=>durations[s]&&timers[s]<Math.min(60,durations[s]*.5));if(insufficient.length){$('study-error').textContent=`请再充分听取版本 ${insufficient.join('、')}；每首至少播放其50%或60秒。`;return}stopAudio();state.responses.push({pair_id:state.order[state.index],ratings,preference,comment:$('comment').value.trim(),listen_seconds:{A:+timers.A.toFixed(1),B:+timers.B.toFixed(1)},durations});state.index++;state.current_listen={A:0,B:0};save();if(state.index>=manifest.pair_count){$('study').classList.add('hidden');$('done').classList.remove('hidden');download()}else render()};
+$('download').onclick=download;$('copy').onclick=async()=>{const text=btoa(unescape(encodeURIComponent(JSON.stringify(result()))));await navigator.clipboard.writeText(text);$('done-status').textContent='结果码已复制。'};
+['A','B'].forEach(s=>{const a=$('audio-'+s);a.addEventListener('play',()=>lastTick[s]=performance.now());a.addEventListener('pause',()=>tick(s));a.addEventListener('ended',()=>tick(s));setInterval(()=>tick(s),1000)});boot().catch(e=>$('intro-error').textContent='页面资源加载失败，请刷新或联系研究者。');
+</script></body></html>
